@@ -144,7 +144,7 @@ const HomePage = () => {
           <div className="highlights-grid">
             <div className="highlight-card">
               <div className="highlight-icon">🧠</div>
-              <h3>AI Research at Princeton</h3>
+              <h3>AI Research at Princeton University</h3>
               <p>Conducted cutting-edge research on gender bias in AI image generation</p>
             </div>
             <div className="highlight-card">
