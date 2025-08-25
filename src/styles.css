@@ -4006,92 +4006,59 @@ img, video {
    END OF STYLESHEET
    ================================ */
 
-   /* ===== MOBILE NAV: hamburger + overlay (overrides) ===== */
+ /* === MOBILE: show the full nav, no dropdown, wrap into rows === */
 @media (max-width: 768px) {
-  /* reset the extra top gap now that nav no longer wraps */
-  .main-content { margin-top: 90px; }
+  /* keep the bar fixed and let it be tall enough for two rows */
+  .nav { padding: 0.35rem 0 0.4rem; }
 
-  /* show the hamburger */
-  .menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px; height: 42px;
-    border: 0; background: transparent; padding: 6px; cursor: pointer;
-    touch-action: manipulation;
-  }
-  .menu-toggle span {
-    display: block; height: 2px; width: 100%;
-    background: var(--text-primary);
-    margin: 6px 0;
-    transition: transform .2s ease, opacity .2s ease;
+  /* logo + controls on the first row, menu below it */
+  .nav-container {
+    padding: 0.6rem 0.9rem;
+    flex-wrap: wrap;              /* allow wrapping */
+    row-gap: 6px;
   }
 
-  /* turn burger into “X” while open */
-  .nav.nav-open .menu-toggle span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-  .nav.nav-open .menu-toggle span:nth-child(2) { opacity: 0; }
-  .nav.nav-open .menu-toggle span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  /* hide hamburger completely */
+  .menu-toggle { display: none !important; }
 
-  /* slide-down panel menu */
+  /* inline menu, not a sliding panel */
   .nav-menu {
-    position: fixed;
-    left: 0; right: 0;
-    top: 70px;                  /* sits just under the bar */
-    bottom: 0;
+    order: 3;                     /* push below the logo row */
+    position: static !important;  /* no fixed overlay */
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    padding: 14px;
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
-    transform: translateY(-10px);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform .22s ease, opacity .18s ease;
-    overscroll-behavior: contain;
-    z-index: 1002;              /* above overlay */
+    flex-wrap: wrap;              /* WRAP onto two rows if needed */
+    justify-content: center;
+    gap: 6px 8px;
+    padding: 4px 0 6px;
+    background: transparent !important;
+    border: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: auto !important;
   }
+
+  /* make buttons compact */
   .nav-item {
-    width: 100%;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 12px;
-    padding: 14px 12px;
-    border-radius: 12px;
-    font-size: 1rem;
+    flex: 0 1 auto;
+    padding: 6px 9px;
+    border-radius: 10px;
+    font-size: 0.78rem;           /* smaller labels */
+    gap: 6px;
   }
-  .nav-icon { font-size: 1.25rem; margin: 0 10px 0 2px; }
+  .nav-icon  { font-size: 1.05rem; margin-bottom: 2px; }
+  .nav-label { font-size: 0.72rem; letter-spacing: .2px; }
 
-  /* dimmed backdrop */
-  .nav-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.35);
-    opacity: 0; pointer-events: none;
-    transition: opacity .2s ease;
-    z-index: 1001;
-  }
+  /* no dark backdrop since we aren't using the drawer */
+  .nav-overlay { display: none !important; }
 
-  /* when menu is open */
-  .nav.nav-open .nav-menu { transform: translateY(0); opacity: 1; pointer-events: auto; }
-  .nav.nav-open .nav-overlay { opacity: 1; pointer-events: auto; }
-
-  /* stop wrapping the buttons across lines in the top bar */
-  .nav-container { flex-wrap: nowrap; }
+  /* give content enough top space for the now-taller bar */
+  .main-content { margin-top: 128px; }
 }
 
-/* ---- HARD OVERRIDE: collapse the nav list on phones unless menu is open ---- */
-@media (max-width: 768px) {
-  /* hide the inline nav row entirely until the burger is opened */
-  .nav:not(.nav-open) .nav-menu { 
-    display: none !important;
-  }
-
-  /* when opened, show it as the fixed slide-down panel you already styled */
-  .nav.nav-open .nav-menu { 
-    display: flex !important;
-  }
-
-  /* keep the top bar from wrapping */
-  .nav-container { flex-wrap: nowrap !important; }
+/* even smaller phones */
+@media (max-width: 420px) {
+  .nav-item   { padding: 5px 7px; font-size: 0.74rem; }
+  .nav-label  { font-size: 0.68rem; }
+  .main-content { margin-top: 144px; }
 }
