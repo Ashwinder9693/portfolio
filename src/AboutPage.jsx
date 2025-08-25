@@ -55,7 +55,7 @@ const AboutPage = () => {
 
         @media (max-width: 768px) {
           .avatar { --size: 240px; }
-          .avatar img { object-position: 50% 15%; transform: translate(-12%, -16%); }
+          .avatar img { object-position: 50% 15%; transform: translate(%, -16%); }
         }
       `}</style>
 
@@ -69,7 +69,7 @@ const AboutPage = () => {
               and research, I'm dedicated to creating innovative solutions that make a difference.
             </p>
 
-            {/* Resume Section */}
+            {/* Resume Section
             <div className="resume-section">
               <button
                 onClick={handleResumeDownload}
@@ -82,7 +82,7 @@ const AboutPage = () => {
               <p className="resume-note">
                 Get a detailed overview of my experience, skills, and achievements
               </p>
-            </div>
+            </div> */}
           </div>
 
           <div className="about-image">

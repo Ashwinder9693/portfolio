@@ -4088,3 +4088,105 @@ img, video {
   /* keep the top-right Resume button visible on mobile */
   .resume-dropdown{ display:inline-block; }
 }
+
+
+/* ================================
+   PROJECTS FILTER (fixed layering)
+   Replace your existing filter-tab styles with this block,
+   or paste it AFTER them to override.
+   ================================ */
+
+.projects-filter {
+  margin-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Button base */
+.filter-tab {
+  position: relative;            /* create stacking context */
+  z-index: 0;                    /* content sits above ::before */
+  padding: 1rem 2rem;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 25px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  backdrop-filter: blur(15px);
+  transition: transform .2s ease, box-shadow .2s ease, color .2s ease;
+  overflow: hidden;              /* clip the gradient neatly */
+  -webkit-transform: translateZ(0); /* iOS z-index quirk fix */
+}
+
+/* The gradient highlight goes UNDER the text */
+.filter-tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity .25s ease;
+  z-index: -1;                   /* <<< key fix */
+  pointer-events: none;
+}
+
+/* Active/hover visuals */
+.filter-tab:hover,
+.filter-tab.active {
+  color: #fff;                   /* keep contrast readable */
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-colored);
+}
+
+.filter-tab:hover::before,
+.filter-tab.active::before {
+  opacity: 1;
+}
+
+/* Search styles (unchanged, included for completeness) */
+.search-container {
+  position: relative;
+  max-width: 350px;
+  margin: 2rem auto 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 25px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-glow);
+  transform: scale(1.02);
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}

@@ -41,7 +41,7 @@ const Navigation = ({ darkMode, setDarkMode, isMenuOpen, setIsMenuOpen, scrollPr
         }
         .resume-menu{
           position:absolute; right:0; top:calc(100% + 8px);
-          width:220px; background: rgba(255,255,255,.90);
+          width:220px; background: rgba(255,255,255,.95);
           backdrop-filter: blur(12px) saturate(150%);
           -webkit-backdrop-filter: blur(12px) saturate(150%);
           border:1px solid var(--border-glass); border-radius:12px;
@@ -88,7 +88,7 @@ const Navigation = ({ darkMode, setDarkMode, isMenuOpen, setIsMenuOpen, scrollPr
           .mobile-panel{
             position:absolute; right:12px; top:calc(100% + 10px);
             width:min(86vw, 320px); max-height:70vh; overflow:auto;
-            background: rgba(255,255,255,.90);
+            background: rgba(255,255,255,.95);
             backdrop-filter: blur(18px) saturate(160%);
             -webkit-backdrop-filter: blur(18px) saturate(160%);
             border:1px solid var(--border-glass); border-radius:16px;
@@ -121,8 +121,8 @@ const Navigation = ({ darkMode, setDarkMode, isMenuOpen, setIsMenuOpen, scrollPr
         <div className="nav-container">
           {/* Logo */}
           <Link className="nav-logo" to="/" onClick={() => setIsMenuOpen(false)}>
-            <span className="logo-text">AS</span>
-            <span className="logo-subtitle">Portfolio</span>
+            <span className="logo-text">A S</span>
+            {/* <span className="logo-text"></span> */}
           </Link>
 
           {/* Desktop menu (hidden on mobile) */}

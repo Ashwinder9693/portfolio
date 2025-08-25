@@ -1,25 +1,25 @@
+// src/HomePage.jsx
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const HomePage = ({ setCurrentPage }) => {
+const RESUME_URL = '/Resume/Ashwinder_Bhupal.pdf'; // place file in public/Resume/
+
+const HomePage = () => {
+  const navigate = useNavigate();
+
   // Ensure animations show on component mount
   useEffect(() => {
     const timer = setTimeout(() => {
-      const elements = document.querySelectorAll('[data-animate]');
-      elements.forEach(el => {
+      document.querySelectorAll('[data-animate]').forEach(el => {
         el.classList.add('visible');
       });
     }, 100);
-
     return () => clearTimeout(timer);
   }, []);
 
   const handleResumeDownload = () => {
-    // You can replace this with the actual path to your resume file
-    const resumeUrl = '/assets/resume/Ashwinder_Singh_Resume.pdf';
-    
-    // Create a temporary link element and trigger download
     const link = document.createElement('a');
-    link.href = resumeUrl;
+    link.href = RESUME_URL;
     link.download = 'Ashwinder_Singh_Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -36,14 +36,14 @@ const HomePage = ({ setCurrentPage }) => {
             ))}
           </div>
         </div>
-        
+
         <div className="hero-content">
           <div className="hero-title">
             <h1 className="title-line">
               <span className="title-text">Ashwinder Singh</span>
             </h1>
             <div className="subtitle-container">
-              <span className="subtitle">Computer Science Student & </span>
+              <span className="subtitle">Computer Science Student &nbsp;</span>
               <span className="rotating-text">
                 <span>Software Developer |</span>
                 <span> Problem Solver |</span>
@@ -52,10 +52,10 @@ const HomePage = ({ setCurrentPage }) => {
               </span>
             </div>
           </div>
-          
+
           <p className="hero-description">
-            Passionate about challenging the status quo and pushing the boundaries of technology. 
-            Pi Theta Kappa Honors Society nominee with expertise in full-stack development, 
+            Passionate about challenging the status quo and pushing the boundaries of technology.
+            Pi Theta Kappa Honors Society nominee with expertise in full-stack development,
             AI research, and data analysis.
           </p>
 
@@ -79,36 +79,51 @@ const HomePage = ({ setCurrentPage }) => {
           </div>
 
           <div className="hero-actions">
-            <button 
+            <button
+              type="button"
               className="btn btn-primary pulse"
-              onClick={() => setCurrentPage('projects')}
+              onClick={() => navigate('/projects')}
             >
               <span>View My Work</span>
               <i className="btn-icon">→</i>
             </button>
-            <button 
+
+            <button
+              type="button"
               className="btn btn-secondary"
-              onClick={() => setCurrentPage('about')}
+              onClick={() => navigate('/about')}
             >
               <span>Learn More</span>
               <i className="btn-icon">📋</i>
             </button>
-            <button 
+
+            {/* <button
+              type="button"
               className="btn btn-primary"
               onClick={handleResumeDownload}
               aria-label="Download Resume"
             >
               <span className="btn-icon">📄</span>
               Download Resume
-            </button>
+            </button> */}
           </div>
 
           <div className="social-proof">
             <div className="social-links">
-              <a href="https://github.com/Ashwinder9693" target="_blank" rel="noopener noreferrer" className="social-link github">
+              <a
+                href="https://github.com/Ashwinder9693"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link github"
+              >
                 <i>⚡</i> GitHub
               </a>
-              <a href="https://www.linkedin.com/in/ashwinder-singh-5b1220206/" target="_blank" rel="noopener noreferrer" className="social-link linkedin">
+              <a
+                href="https://www.linkedin.com/in/ashwinder-singh-5b1220206/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link linkedin"
+              >
                 <i>💼</i> LinkedIn
               </a>
               <a href="mailto:Ashwinderbhupal6@gmail.com" className="social-link email">
@@ -120,7 +135,6 @@ const HomePage = ({ setCurrentPage }) => {
 
         <div className="scroll-indicator">
           <div className="scroll-arrow"></div>
-          {/* <span>Scroll to explore</span> */}
         </div>
       </div>
 
