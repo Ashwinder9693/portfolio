@@ -1,6 +1,6 @@
 // src/App.jsx
 import React, { useState, useEffect, useRef } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 
 import Navigation from './Navigation.jsx'
 import HomePage from './HomePage.jsx'
@@ -18,6 +18,7 @@ const App = () => {
   const [notifications, setNotifications] = useState([])
 
   const mainRef = useRef(null)
+  const location = useLocation()
 
   // Advanced loading with progress tracking
   useEffect(() => {
@@ -33,24 +34,24 @@ const App = () => {
     return () => clearInterval(interval)
   }, [])
 
-  // Scroll progress tracking
+  // Scroll progress tracking against <main> (make sure CSS sets overflow:auto)
   useEffect(() => {
-    const handleScroll = () => {
-      if (!mainRef.current) return
-      const scrollTop = mainRef.current.scrollTop
-      const scrollHeight = mainRef.current.scrollHeight - mainRef.current.clientHeight
-      setScrollProgress((scrollTop / scrollHeight) * 100)
-    }
     const el = mainRef.current
     if (!el) return
-    el.addEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      const scrollTop = el.scrollTop
+      const max = el.scrollHeight - el.clientHeight || 1
+      setScrollProgress((scrollTop / max) * 100)
+    }
+    handleScroll()
+    el.addEventListener('scroll', handleScroll, { passive: true })
     return () => el.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Mouse tracking
+  // Mouse tracking (desktop flair)
   useEffect(() => {
     const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY })
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
@@ -60,6 +61,18 @@ const App = () => {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
+
+  // Lock body scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.classList.toggle('no-scroll', isMenuOpen)
+  }, [isMenuOpen])
+
+  // Close menu & scroll to top on route change
+  useEffect(() => {
+    setIsMenuOpen(false)
+    // smooth scroll the internal scroller
+    if (mainRef.current) mainRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location.pathname])
 
   // Reveal animations when sections enter viewport
   useEffect(() => {
