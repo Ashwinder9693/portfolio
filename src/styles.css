@@ -4101,3 +4101,12 @@ img, video {
   /* keep logo + burger on the same line */
   .nav-logo{ flex: 0 0 auto; }
 }
+
+/* Make the slide-down menu solid and keep the bar on one line */
+@media (max-width: 768px) {
+  .nav-container { flex-wrap: nowrap; }
+  .nav-menu {
+    background: var(--bg-secondary) !important;
+    backdrop-filter: none !important;
+  }
+}
