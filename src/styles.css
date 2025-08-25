@@ -289,7 +289,7 @@ body {
    NAVIGATION - PROFESSIONAL MAGIC
    ================================ */
 .nav {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -545,7 +545,7 @@ body {
    MAIN CONTENT STRUCTURE
    ================================ */
 .main-content {
-  margin-top: 90px;
+  margin-top: 0px;
   min-height: calc(100vh - 90px);
   position: relative;
 }
@@ -4006,59 +4006,54 @@ img, video {
    END OF STYLESHEET
    ================================ */
 
- /* === MOBILE: show the full nav, no dropdown, wrap into rows === */
+/* ===== Mobile: keep full nav visible, single row, no dropdown ===== */
 @media (max-width: 768px) {
-  /* keep the bar fixed and let it be tall enough for two rows */
-  .nav { padding: 0.35rem 0 0.4rem; }
 
-  /* logo + controls on the first row, menu below it */
-  .nav-container {
-    padding: 0.6rem 0.9rem;
-    flex-wrap: wrap;              /* allow wrapping */
-    row-gap: 6px;
+  /* never show hamburger on mobile for this design */
+  .menu-toggle { display: none !important; }
+  .nav-overlay { display: none !important; }
+
+  /* top bar layout */
+  .nav-container{
+    padding: .6rem .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .4rem;
+    flex-wrap: nowrap;                 /* keep logo and controls on the same line */
   }
 
-  /* hide hamburger completely */
-  .menu-toggle { display: none !important; }
-
-  /* inline menu, not a sliding panel */
-  .nav-menu {
-    order: 3;                     /* push below the logo row */
-    position: static !important;  /* no fixed overlay */
-    display: flex;
-    flex-wrap: wrap;              /* WRAP onto two rows if needed */
-    justify-content: center;
-    gap: 6px 8px;
-    padding: 4px 0 6px;
+  /* show the menu inline (not as a panel) */
+  .nav-menu{
+    position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;    /* spread items evenly */
+    gap: .25rem;
+    padding: 0 !important;
     background: transparent !important;
     border: 0 !important;
     transform: none !important;
     opacity: 1 !important;
     pointer-events: auto !important;
-    z-index: auto !important;
   }
 
-  /* make buttons compact */
-  .nav-item {
-    flex: 0 1 auto;
-    padding: 6px 9px;
+  /* tighten buttons so 5 fit across */
+  .nav-item{
+    padding: .45rem .5rem;
     border-radius: 10px;
-    font-size: 0.78rem;           /* smaller labels */
-    gap: 6px;
+    font-size: .78rem;
   }
-  .nav-icon  { font-size: 1.05rem; margin-bottom: 2px; }
-  .nav-label { font-size: 0.72rem; letter-spacing: .2px; }
+  .nav-icon{ font-size: 1.05rem; margin: 0 0 .15rem 0; }
 
-  /* no dark backdrop since we aren't using the drawer */
-  .nav-overlay { display: none !important; }
-
-  /* give content enough top space for the now-taller bar */
-  .main-content { margin-top: 128px; }
+  /* logo on the same line, slightly smaller */
+  .logo-text{ font-size: 1.6rem; }
+  .logo-subtitle{ font-size: .62rem; letter-spacing: 1.5px; }
 }
 
-/* even smaller phones */
-@media (max-width: 420px) {
-  .nav-item   { padding: 5px 7px; font-size: 0.74rem; }
-  .nav-label  { font-size: 0.68rem; }
-  .main-content { margin-top: 144px; }
+/* extra-tight for very small phones (≤ 390px wide) */
+@media (max-width: 390px){
+  .nav-item{ padding: .35rem .4rem; font-size: .72rem; }
+  .nav-icon{ font-size: .98rem; }
 }
