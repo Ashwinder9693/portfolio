@@ -145,12 +145,14 @@ const HomePage = () => {
             <div className="highlight-card">
               <div className="highlight-icon">🧠</div>
               <h3>AI Research at Princeton University</h3>
+              <p>Featured on Princeton university's website for presenting a neurolink research in NEU100 Class </p>
               <p>Conducted cutting-edge research on gender bias in AI image generation</p>
             </div>
             <div className="highlight-card">
               <div className="highlight-icon">🏆</div>
-              <h3>Hackathon Attended</h3>
+              <h3>Active Hackathon Participant</h3>
               <p>Made Major Projects at Hack TCNJ with FBI crime data visualization</p>
+              <p>Lead Team of 4+ partner in HACKRU and Hack NJIT and made unique projects</p>
             </div>
             <div className="highlight-card">
               <div className="highlight-icon">💼</div>
