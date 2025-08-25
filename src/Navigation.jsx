@@ -1,81 +1,131 @@
 // src/Navigation.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-const Navigation = ({
-  darkMode,
-  setDarkMode,
-  isMenuOpen,
-  setIsMenuOpen,
-  scrollProgress,
-}) => {
-  // Use Vite base to work locally AND on GitHub Pages
-  const base = import.meta.env.BASE_URL || '/';
-  // Your PDF lives in public/Resume/Ashwinder_Bhupal.pdf -> served from /Resume/...
-  const resumeHref = `${base}Resume/Ashwinder_Bhupal.pdf`;
+const Navigation = ({ darkMode, setDarkMode, isMenuOpen, setIsMenuOpen, scrollProgress }) => {
+  // Build file URL that works locally and on GitHub Pages
+  const base = import.meta.env.BASE_URL; // ends with /
+  const resumeUrl = `${base}Resume/Ashwinder_Bhupal.pdf`;
 
   const navigationItems = [
     { id: 'home', label: 'Home', icon: '🏠', to: '/' },
     { id: 'about', label: 'About', icon: '👨‍💻', to: '/about' },
     { id: 'projects', label: 'Projects', icon: '🚀', to: '/projects' },
     { id: 'skills', label: 'Skills', icon: '⚡', to: '/skills' },
-    { id: 'experience', label: 'Experience', icon: '💼', to: '/experience' },
+    { id: 'experience', label: 'Experience', icon: '💼', to: '/experience' }
   ];
+
+  const [showResume, setShowResume] = useState(false);
+
+  const handleResumeView = () => window.open(resumeUrl, '_blank');
+  const handleResumeDownload = () => {
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Ashwinder_Bhupal_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setShowResume(false);
+  };
 
   return (
     <>
       <style>{`
-        /* ---- Resume dropdown (desktop & mobile) ---- */
-        .resume-dropdown { position: relative; }
-        .resume-btn {
-          appearance: none; border: 0; cursor: pointer;
-          background: var(--bg-glass); color: var(--text-primary);
-          border: 1px solid var(--border-glass); border-radius: 12px;
-          padding: 10px 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px;
-          backdrop-filter: blur(10px);
+        /* ---- Resume dropdown look (70% glass) ---- */
+        .resume-dropdown { position: relative; display:inline-block; }
+        .resume-btn{
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color:#fff; border:0; padding:8px 14px; border-radius:10px;
+          font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer;
+          box-shadow: 0 6px 18px rgba(118,75,162,.35);
         }
-        .resume-btn:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
-
-        .resume-dropdown-content {
-          position: absolute; top: calc(100% + 10px); right: 0;
-          display: none; min-width: 220px; padding: 6px;
-          background: var(--bg-secondary); border: 1px solid var(--border-color);
-          border-radius: 14px; box-shadow: var(--shadow-xl); z-index: 1003;
+        .resume-menu{
+          position:absolute; right:0; top:calc(100% + 8px);
+          width:220px; background: rgba(255,255,255,.70);
+          backdrop-filter: blur(12px) saturate(150%);
+          -webkit-backdrop-filter: blur(12px) saturate(150%);
+          border:1px solid var(--border-glass); border-radius:12px;
+          box-shadow: 0 12px 40px rgba(0,0,0,.18);
+          overflow:hidden; z-index:1100; display:none;
         }
-        .resume-dropdown:hover .resume-dropdown-content,
-        .resume-dropdown:focus-within .resume-dropdown-content { display: block; }
-
-        .resume-dropdown-item {
-          display: flex; align-items: center; gap: 10px;
-          padding: 12px 14px; border-radius: 10px; text-decoration: none;
-          color: var(--text-primary); font-weight: 600;
+        .resume-menu.open{ display:block; }
+        .resume-item{
+          display:flex; align-items:center; gap:10px;
+          padding:12px 14px; cursor:pointer; font-weight:600; color:var(--text-primary);
         }
-        .resume-dropdown-item:hover { background: var(--bg-tertiary); color: var(--accent-color); }
+        .resume-item:hover{ background:rgba(255,255,255,.45); }
 
-        /* When hamburger menu is open, hide the floating dropdown so we don't
-           get those two large "View/Download" cards in the center. */
-        .nav.nav-open .resume-dropdown-content { display: none !important; }
+        /* keep the nav progress line */
+        .scroll-progress{ position:absolute; bottom:0; left:0; height:3px;
+          background:var(--gradient-primary); border-radius:0 2px 2px 0; }
 
-        /* Keep nav content on a single row; center tabs; keep controls on right */
-        .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .nav-menu { flex: 1; display: flex; justify-content: center; }
+        /* Desktop layout */
+        @media (min-width:769px){
+          .nav-container{ justify-content:space-between; }
+          .nav-menu{ display:flex; gap:.8rem; align-items:center; }
+          .menu-toggle, .mobile-panel{ display:none; }
+        }
 
-        /* Mobile tweaks */
-        @media (max-width: 768px) {
-          .resume-btn { padding: 8px 10px; font-size: 14px; }
-          .resume-dropdown-content { right: 0; left: auto; top: calc(100% + 8px); }
+        /* Mobile: hide desktop inline menu, use mobile panel */
+        @media (max-width:768px){
+          .nav-container{
+            padding:.6rem .8rem; display:flex; align-items:center;
+            justify-content:space-between; gap:.4rem; flex-wrap:nowrap;
+          }
+          .nav-menu{ display:none !important; }  /* hide desktop list */
+
+          .menu-toggle{
+            display:inline-flex; align-items:center; justify-content:center;
+            width:40px; height:40px; border:0; background:transparent; padding:6px; cursor:pointer;
+          }
+          .menu-toggle span{ display:block; height:2px; width:100%; background:var(--text-primary);
+            margin:6px 0; transition:transform .2s ease, opacity .2s ease; }
+          .nav.nav-open .menu-toggle span:nth-child(1){ transform:translateY(8px) rotate(45deg); }
+          .nav.nav-open .menu-toggle span:nth-child(2){ opacity:0; }
+          .nav.nav-open .menu-toggle span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
+
+          /* 70% visible glass dropdown panel, anchored right under the bar */
+          .mobile-panel{
+            position:absolute; right:12px; top:calc(100% + 10px);
+            width:min(86vw, 320px); max-height:70vh; overflow:auto;
+            background: rgba(255,255,255,.70);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border:1px solid var(--border-glass); border-radius:16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.15);
+            transform-origin: top right;
+            transform: scale(.96) translateY(-8px);
+            opacity:0; pointer-events:none;
+            transition: transform .18s ease, opacity .16s ease;
+            z-index:1003;
+          }
+          .mobile-panel.open{ opacity:1; pointer-events:auto; transform: scale(1) translateY(0); }
+
+          .mobile-list{ display:flex; flex-direction:column; padding:8px; }
+          .mobile-item{
+            display:flex; align-items:center; gap:12px;
+            padding:12px 12px; border-radius:12px; text-decoration:none;
+            color:var(--text-primary); font-weight:600; font-size:1rem;
+          }
+          .mobile-item:hover{ background:rgba(255,255,255,.45); }
+          .mobile-item.active{ background: rgba(52,152,219,.12); color:var(--accent-color); }
+
+          .nav-overlay{
+            position:fixed; inset:0; background:rgba(0,0,0,.35);
+            opacity:1; pointer-events:auto; z-index:1002;
+          }
         }
       `}</style>
 
       <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
         <div className="nav-container">
-          {/* Logo (always left) */}
+          {/* Logo */}
           <Link className="nav-logo" to="/" onClick={() => setIsMenuOpen(false)}>
             <span className="logo-text">AS</span>
             <span className="logo-subtitle">Portfolio</span>
           </Link>
 
-          {/* Center tabs */}
+          {/* Desktop menu (hidden on mobile) */}
           <div className="nav-menu">
             {navigationItems.map((item) => (
               <NavLink
@@ -91,32 +141,23 @@ const Navigation = ({
             ))}
           </div>
 
-          {/* Right controls: only ONE resume control lives in the navbar */}
-          <div className="nav-controls" style={{display:'flex',alignItems:'center',gap:'10px'}}>
+          {/* Right controls: Resume + Hamburger */}
+          <div className="nav-controls" style={{display:'flex', alignItems:'center', gap:'10px'}}>
             <div className="resume-dropdown">
-              <button className="resume-btn" aria-haspopup="true" aria-expanded="false">
-                <span style={{fontSize:'1.1rem'}}>📄</span> Resume
+              <button
+                className="resume-btn"
+                type="button"
+                onClick={() => setShowResume(v => !v)}
+                aria-expanded={showResume}
+              >
+                📄 Resume
               </button>
-              <div className="resume-dropdown-content" role="menu">
-                <a
-                  className="resume-dropdown-item"
-                  href={resumeHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>👁️</span> View Resume
-                </a>
-                <a
-                  className="resume-dropdown-item"
-                  href={resumeHref}
-                  download="Ashwinder_Bhupal_Resume.pdf"
-                >
-                  <span>📥</span> Download PDF
-                </a>
+              <div className={`resume-menu ${showResume ? 'open' : ''}`}>
+                <div className="resume-item" onClick={handleResumeView}>👁️ View Resume</div>
+                <div className="resume-item" onClick={handleResumeDownload}>📥 Download PDF</div>
               </div>
             </div>
 
-            {/* Hamburger */}
             <button
               className="menu-toggle"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -127,11 +168,27 @@ const Navigation = ({
           </div>
         </div>
 
-        {/* progress line */}
-        <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
+        {/* Mobile panel (separate node; no Resume here to avoid duplicates) */}
+        <div className={`mobile-panel ${isMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-list">
+            {navigationItems.map((item) => (
+              <NavLink
+                key={item.id}
+                to={item.to}
+                className={({ isActive }) => `mobile-item ${isActive ? 'active' : ''}`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span className="mobile-icon">{item.icon}</span>
+                <span>{item.label}</span>
+              </NavLink>
+            ))}
+          </div>
+        </div>
 
-        {/* backdrop for the slide-down panel */}
+        {/* Backdrop */}
         {isMenuOpen && <div className="nav-overlay" onClick={() => setIsMenuOpen(false)} />}
+
+        <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
       </nav>
     </>
   );
