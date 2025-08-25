@@ -41,7 +41,7 @@ const Navigation = ({ darkMode, setDarkMode, isMenuOpen, setIsMenuOpen, scrollPr
         }
         .resume-menu{
           position:absolute; right:0; top:calc(100% + 8px);
-          width:220px; background: rgba(255,255,255,.70);
+          width:220px; background: rgba(255,255,255,.90);
           backdrop-filter: blur(12px) saturate(150%);
           -webkit-backdrop-filter: blur(12px) saturate(150%);
           border:1px solid var(--border-glass); border-radius:12px;
@@ -88,7 +88,7 @@ const Navigation = ({ darkMode, setDarkMode, isMenuOpen, setIsMenuOpen, scrollPr
           .mobile-panel{
             position:absolute; right:12px; top:calc(100% + 10px);
             width:min(86vw, 320px); max-height:70vh; overflow:auto;
-            background: rgba(255,255,255,.70);
+            background: rgba(255,255,255,.90);
             backdrop-filter: blur(18px) saturate(160%);
             -webkit-backdrop-filter: blur(18px) saturate(160%);
             border:1px solid var(--border-glass); border-radius:16px;
