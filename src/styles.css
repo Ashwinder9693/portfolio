@@ -4006,54 +4006,98 @@ img, video {
    END OF STYLESHEET
    ================================ */
 
-/* ===== Mobile: keep full nav visible, single row, no dropdown ===== */
-@media (max-width: 768px) {
+/* Keep nav visible but not overlapping content */
+.nav { position: sticky; top: 0; z-index: 1000; }
+.main-content { margin-top: 0; }
 
-  /* never show hamburger on mobile for this design */
-  .menu-toggle { display: none !important; }
-  .nav-overlay { display: none !important; }
-
-  /* top bar layout */
-  .nav-container{
-    padding: .6rem .8rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: .4rem;
-    flex-wrap: nowrap;                 /* keep logo and controls on the same line */
-  }
-
-  /* show the menu inline (not as a panel) */
-  .nav-menu{
-    position: static !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: space-between;    /* spread items evenly */
-    gap: .25rem;
-    padding: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    transform: none !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  /* tighten buttons so 5 fit across */
-  .nav-item{
-    padding: .45rem .5rem;
-    border-radius: 10px;
-    font-size: .78rem;
-  }
-  .nav-icon{ font-size: 1.05rem; margin: 0 0 .15rem 0; }
-
-  /* logo on the same line, slightly smaller */
-  .logo-text{ font-size: 1.6rem; }
-  .logo-subtitle{ font-size: .62rem; letter-spacing: 1.5px; }
+/* Desktop: show inline menu, hide hamburger/panel */
+@media (min-width: 769px){
+  .nav-menu{ display:flex; }
+  .menu-toggle, .mobile-panel{ display:none; }
+  /* desktop resume visible */
+  .resume-dropdown{ display:inline-block; }
 }
 
-/* extra-tight for very small phones (≤ 390px wide) */
-@media (max-width: 390px){
-  .nav-item{ padding: .35rem .4rem; font-size: .72rem; }
-  .nav-icon{ font-size: .98rem; }
+/* Mobile: logo left, hamburger right; hide inline menu */
+@media (max-width: 768px){
+  .nav-container{
+    padding: .6rem .8rem;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:.4rem; flex-wrap:nowrap;
+  }
+
+  .nav-menu{ display:none !important; } /* prevent wrap */
+  .resume-dropdown{ display:none; }     /* resume is in the panel */
+
+  /* burger button (right) */
+  .menu-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px;height:40px;border:0;background:transparent;padding:6px;cursor:pointer;
+  }
+  .menu-toggle span{
+    display:block;height:2px;width:100%;background:var(--text-primary);
+    margin:6px 0; transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav.nav-open .menu-toggle span:nth-child(1){ transform:translateY(8px) rotate(45deg); }
+  .nav.nav-open .menu-toggle span:nth-child(2){ opacity:0; }
+  .nav.nav-open .menu-toggle span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
+
+  /* beautiful glassy dropdown anchored to the right */
+  .mobile-panel{
+    position:absolute;
+    right:12px; top:calc(100% + 10px);
+    width:min(86vw, 320px);
+    background: var(--bg-glass);
+    border:1px solid var(--border-glass);
+    backdrop-filter: blur(18px) saturate(160%);
+    border-radius:16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.15);
+    transform-origin: top right;
+    transform: scale(.96) translateY(-8px);
+    opacity:0; pointer-events:none;
+    transition: transform .18s ease, opacity .16s ease;
+    z-index: 1003;
+    overflow:hidden;
+  }
+  .mobile-panel.open{ opacity:1; pointer-events:auto; transform: scale(1) translateY(0); }
+
+  .mobile-list{
+    display:flex; flex-direction:column; padding:8px;
+  }
+
+  .mobile-item{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 12px; border-radius:12px; text-decoration:none;
+    color:var(--text-primary); font-weight:600; font-size:1rem;
+    transition: background-color .15s ease, transform .12s ease;
+  }
+  .mobile-item:hover{ background:var(--bg-glass-strong); transform: translateX(2px); }
+  .mobile-item.active{ background: rgba(52,152,219,.10); color: var(--accent-color); }
+
+  .mobile-icon{ font-size:1.2rem; }
+
+  .mobile-divider{ height:1px; background:var(--border-color); opacity:.6; margin:2px 0; }
+
+  .mobile-actions{ display:flex; flex-direction:column; gap:8px; padding:10px; }
+  .mobile-action{
+    width:100%; padding:12px; border-radius:12px; border:1px solid var(--border-glass);
+    background: var(--bg-secondary); font-weight:700;
+    transition: transform .12s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .mobile-action:hover{
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    background: var(--bg-glass);
+  }
+
+  /* dimmed backdrop */
+  .nav-overlay{
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.35);
+    opacity: 1; pointer-events: auto;
+    z-index: 1002;
+  }
+
+  /* keep logo + burger on the same line */
+  .nav-logo{ flex: 0 0 auto; }
 }
