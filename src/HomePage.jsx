@@ -1044,10 +1044,10 @@ const HomePage = () => {
         <div style={styles.heroContent}>
           <div style={styles.heroTitle}>
             <h1 style={styles.titleLine}>
-              <span style={styles.titleText}>Ashwinder Singh</span>
+              <span style={styles.titleText}>Ashwinder Bhupal</span>
             </h1>
             <div style={styles.subtitleContainer}>
-              <span style={styles.subtitle}>Computer Science Student &nbsp;•&nbsp;</span>
+              <span style={styles.subtitle}>Computer Science &nbsp;•&nbsp;</span>
               <span style={styles.rotatingText}>
                 {rotatingTexts[currentTextIndex]}
               </span>
