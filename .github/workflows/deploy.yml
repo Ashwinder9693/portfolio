@@ -18,12 +18,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
       - name: Install & Build
         run: |
           npm ci
           npm run build
-          # SPA fallback for BrowserRouter on GitHub Pages:
+          # SPA fallback for React Router:
           cp dist/index.html dist/404.html
 
       - name: Deploy to gh-pages branch
@@ -32,3 +33,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist
           publish_branch: gh-pages
+          cname: onlyjobs.work   # <- ensures CNAME file is added in the deployed branch
