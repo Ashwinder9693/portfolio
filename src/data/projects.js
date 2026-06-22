@@ -206,7 +206,7 @@ export const projects = [
     id: 9,
     title: "OnlyJobs Portfolio",
     description:
-      "This portfolio website — built with React 19 and Vite, deployed via GitHub Actions to a custom domain with a premium Apple-inspired design.",
+      "This portfolio website — built with React 19 and Vite, deployed via GitHub Actions to a custom domain with a sophisticated dark design.",
     tags: ["React", "Vite", "CSS", "GitHub Actions"],
     category: "Web Development",
     year: "2025",

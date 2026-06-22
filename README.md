@@ -69,3 +69,12 @@ Site content lives in `src/data/`, separate from presentation:
 - `skills.js` — skill categories, certifications, learning
 - `experience.js` — work history, leadership, metrics
 - `personal.js` — name, bio, stats, navigation, contact details
+
+## Reference docs
+
+Human-readable catalogs that mirror the data files — handy for reviewing or updating content:
+
+- [`PROJECTS.md`](PROJECTS.md) — every project with description, tech stack, and links (mirrors `src/data/projects.js`)
+- [`CERTIFICATIONS.md`](CERTIFICATIONS.md) — all certifications with verification links (mirrors the `certifications` array in `src/data/skills.js`)
+
+Each doc includes a short "how to add" guide. Note these are reference mirrors — the live site is driven by the `src/data/` files, so update both the data file and the matching `.md` to keep them in sync.
