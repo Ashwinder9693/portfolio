@@ -58,7 +58,7 @@
 
       /* Name */
       .intro-text{
-        margin-top:2px; opacity:0; transform:translateY(10px);
+        margin-top:2px; max-width:100%; opacity:0; transform:translateY(10px);
         transition:opacity 700ms ease 250ms, transform 700ms ease 250ms;
       }
       .intro-screen.active .intro-text{ opacity:1; transform:translateY(0); }
@@ -75,7 +75,7 @@
 
       /* Role / credential line */
       .intro-subtitle{
-        margin-top:8px;
+        margin-top:8px; max-width:100%; line-height:1.7;
         font-family:ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
         font-size:.72rem; letter-spacing:.28em; text-transform:uppercase;
         color:rgba(255,255,255,.55);
@@ -110,6 +110,14 @@
         transition:width 2000ms cubic-bezier(.65,.05,.36,1) 300ms;
       }
 
+      /* Mobile */
+      @media (max-width:480px){
+        .intro-content{ padding:0 18px; }
+        .intro-logo{ width:80px; }
+        .intro-title{ font-size:clamp(1.5rem, 8vw, 2.1rem); letter-spacing:.05em; }
+        .intro-subtitle{ font-size:.6rem; letter-spacing:.14em; }
+      }
+
       /* Respect reduced motion */
       @media (prefers-reduced-motion: reduce){
         .intro-logo,
@@ -138,11 +146,11 @@
         </div>
 
         <div class="intro-text">
-          <span class="intro-title">Ashwinder&nbsp;Bhupal</span>
+          <span class="intro-title">Ashwinder Bhupal</span>
         </div>
 
         <div class="intro-subtitle">
-          Software&nbsp;Developer<span class="dot">·</span>Rutgers&nbsp;CS<span class="dot">·</span>Princeton&nbsp;Scholar
+          Software&nbsp;Developer <span class="dot">·</span> Rutgers&nbsp;CS <span class="dot">·</span> Princeton&nbsp;Scholar
         </div>
 
         <div class="intro-rule"></div>
