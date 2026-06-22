@@ -98,7 +98,7 @@ const Projects = () => {
                     <div className="project-card-image-wrap">
                       <img
                         src={project.image}
-                        alt={`${project.title} project screenshot`}
+                        alt={`${project.title} cover image`}
                         className="project-card-image"
                         loading="lazy"
                       />

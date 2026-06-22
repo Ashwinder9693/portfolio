@@ -1,5 +1,47 @@
 export const experiences = [
   {
+    id: 4,
+    company: "Amazon",
+    period: "Oct 2024 – Present",
+    duration: "1 yr 9 mos",
+    location: "New Jersey · On-site",
+    roles: [
+      {
+        role: "Area Manager, Operations (L4)",
+        type: "Full-time",
+        period: "Jul 2026 – Present",
+        location: "PNE5 · Robbinsville, NJ",
+        achievements: [
+          "Lead a team of 100+ associates in a high-volume fulfillment operation, owning daily throughput, labor planning, and process optimization driven by operational data analysis",
+          "Cut labor-time tracking discrepancies by 83% across 4–5 hour shifts during Phase 1 testing by building a Python tool that pulls live operational API data to detect and correct labor-flow mismatches before they post",
+          "Analyze large, multidimensional operational datasets to validate data quality, identify trends, and translate findings into actionable process improvements for site leadership"
+        ],
+        tags: ["Python", "Operations", "Data Analysis", "API Integration", "Team Leadership"]
+      },
+      {
+        role: "Fulfillment Center Associate",
+        type: "Part-time",
+        period: "Apr 2025 – Present · 1 yr 3 mos",
+        location: "Monroe, NJ",
+        achievements: [
+          "Maintained inventory accuracy and order throughput across high-volume fulfillment operations while holding a 3.94 GPA as a full-time CS student"
+        ],
+        tags: ["Operations", "Inventory Accuracy", "Fulfillment"]
+      },
+      {
+        role: "Sortation Associate",
+        type: "Part-time",
+        period: "Oct 2024 – Apr 2025 · 7 mos",
+        location: "Edison, NJ",
+        achievements: [
+          "Achieved 99% package accuracy rate across high-throughput sortation workflows; exceeded daily output targets by 15%",
+          "Developed execution discipline and operational precision in a zero-error-tolerance environment"
+        ],
+        tags: ["Sortation", "Throughput", "Quality Control"]
+      }
+    ]
+  },
+  {
     id: 1,
     role: "Software Engineer Intern",
     company: "Oasis Infobyte",
@@ -24,7 +66,7 @@ export const experiences = [
     period: "Jul 2024 – Aug 2024",
     duration: "2 months",
     description:
-      "Selected as one of ~30 students for Princeton's competitive Transfer Scholars Initiative. Conducted faculty-supervised research on vestibular system stimulation through sensor data analysis.",
+      "Conducted faculty-supervised research on vestibular system stimulation through multidimensional sensor-data analysis, as part of Princeton's competitive Transfer Scholars Initiative.",
     achievements: [
       "Selected as one of ~30 students nationally for Princeton's competitive Transfer Scholars Initiative",
       "Processed and analyzed complex, multidimensional EKG sensor data using statistical methods to identify physiological patterns",
@@ -77,7 +119,7 @@ export const leadership = [
   },
   {
     icon: "💰",
-    role: "Treasure Team Member",
+    role: "Treasury Team Member",
     org: "Compuwave Society, SBSSU",
     period: "Jan 2022 – Dec 2022",
     description:
@@ -94,7 +136,7 @@ export const experiencePageCopy = {
 }
 
 export const metrics = [
-  { value: "3", label: "Work Experiences" },
+  { value: "4", label: "Work Experiences" },
   { value: "3.94", label: "GPA at Rutgers" },
   { value: "26+", label: "Students Mentored" },
   { value: "4", label: "Leadership Roles" }

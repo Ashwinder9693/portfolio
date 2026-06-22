@@ -33,41 +33,32 @@
 
       /* Intro overlay */
       .intro-screen{
-        position:fixed; inset:0; background:#000;
+        position:fixed; inset:0;
+        background:radial-gradient(125% 125% at 50% 38%, #15161a 0%, #0b0b0d 55%, #000 100%);
         display:grid; place-items:center;
         z-index:10000; opacity:1; transition:opacity .8s ease;
       }
       .intro-screen.fade-out{ opacity:0; }
-      .intro-content{ text-align:center; }
+      .intro-content{
+        text-align:center; padding:0 24px;
+        display:flex; flex-direction:column; align-items:center;
+      }
 
-      /* Logo (soft white edge glow) */
-      .intro-logo-wrap{ position:relative; display:inline-block; margin-bottom:14px; }
+      /* Logo (steady, refined edge glow) */
+      .intro-logo-wrap{ position:relative; display:inline-block; margin-bottom:16px; }
       .intro-logo{
-        width:200px; height:auto; opacity:0; transition:opacity 600ms ease;
+        width:104px; height:auto; opacity:0;
+        transform:translateY(6px) scale(.98);
+        transition:opacity 700ms ease, transform 700ms ease;
         filter:
-          drop-shadow(0 0 10px rgba(255,255,255,.85))
-          drop-shadow(0 0 22px rgba(255,255,255,.55));
+          drop-shadow(0 0 9px rgba(255,255,255,.50))
+          drop-shadow(0 0 20px rgba(255,255,255,.28));
       }
-      .intro-screen.active .intro-logo{
-        opacity:1;
-        animation:logoGlow 3s ease-in-out infinite;
-      }
-      @keyframes logoGlow{
-        0%,100%{
-          filter:
-            drop-shadow(0 0 10px rgba(255,255,255,.8))
-            drop-shadow(0 0 20px rgba(255,255,255,.5));
-        }
-        50%{
-          filter:
-            drop-shadow(0 0 18px rgba(255,255,255,1))
-            drop-shadow(0 0 36px rgba(255,255,255,.7));
-        }
-      }
+      .intro-screen.active .intro-logo{ opacity:1; transform:translateY(0) scale(1); }
 
-      /* Your name (premium block look) */
+      /* Name */
       .intro-text{
-        margin-top:8px; opacity:0; transform:translateY(10px);
+        margin-top:2px; opacity:0; transform:translateY(10px);
         transition:opacity 700ms ease 250ms, transform 700ms ease 250ms;
       }
       .intro-screen.active .intro-text{ opacity:1; transform:translateY(0); }
@@ -75,38 +66,60 @@
       .intro-title{
         font-family:"Teko", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
         font-weight:600;
-        letter-spacing:.06em;
-        font-size:clamp(1.8rem, 4.5vw, 2.8rem);
+        letter-spacing:.10em;
+        font-size:clamp(2rem, 5vw, 3rem);
         color:#fff;
         text-transform:uppercase;
         line-height:1;
       }
 
-      /* Kill any old/rainbow loader remnants if your larger CSS is still present */
-      .loading-screen,
-      .loading-content,
-      .loading-logo,
-      .loading-text,
-      .loading-bar,
-      .loading-progress{
-        display:none!important; visibility:hidden!important; pointer-events:none!important;
-        animation:none!important; opacity:0!important; z-index:-1!important;
+      /* Role / credential line */
+      .intro-subtitle{
+        margin-top:8px;
+        font-family:ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size:.72rem; letter-spacing:.28em; text-transform:uppercase;
+        color:rgba(255,255,255,.55);
+        opacity:0; transform:translateY(8px);
+        transition:opacity 700ms ease 450ms, transform 700ms ease 450ms;
       }
-      :root{
-        --gradient-rainbow: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0)) !important;
+      .intro-screen.active .intro-subtitle{ opacity:1; transform:translateY(0); }
+      .intro-subtitle .dot{ color:#7c8cff; padding:0 6px; }
+
+      /* Divider */
+      .intro-rule{
+        width:0; height:1px; margin-top:20px;
+        background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+        transition:width 900ms ease 600ms;
       }
-      .loading-content::before,
-      .image-placeholder::before,
-      .project-image::before,
-      .experience-header-new::before,
-      .contact-hero::before,
-      .about-hero::before{
-        background:none!important; animation:none!important; opacity:0!important;
+      .intro-screen.active .intro-rule{ width:min(340px, 68vw); }
+
+      /* Deliberate loading bar */
+      .intro-progress{
+        margin-top:26px; width:min(200px, 56vw); height:2px;
+        background:rgba(255,255,255,.12); border-radius:2px; overflow:hidden;
+        opacity:0; transition:opacity 500ms ease 550ms;
+      }
+      .intro-screen.active .intro-progress{ opacity:1; }
+      .intro-progress-bar{
+        display:block; height:100%; width:0;
+        background:linear-gradient(90deg, #7c8cff, #c084fc);
+        border-radius:2px;
+      }
+      .intro-screen.active .intro-progress-bar{
+        width:100%;
+        transition:width 2000ms cubic-bezier(.65,.05,.36,1) 300ms;
       }
 
       /* Respect reduced motion */
       @media (prefers-reduced-motion: reduce){
-        .intro-logo{ animation:none!important; }
+        .intro-logo,
+        .intro-text,
+        .intro-subtitle,
+        .intro-rule,
+        .intro-progress,
+        .intro-progress-bar{ transition:none!important; transform:none!important; }
+        .intro-screen.active .intro-progress-bar{ width:100%; }
+        .intro-screen.active .intro-rule{ width:min(340px,68vw); }
       }
     </style>
   </head>
@@ -117,7 +130,7 @@
       <div id="root"></div>
     </div>
 
-    <!-- Minimal intro overlay -->
+    <!-- Intro overlay -->
     <div id="intro" class="intro-screen">
       <div class="intro-content">
         <div class="intro-logo-wrap">
@@ -126,11 +139,15 @@
 
         <div class="intro-text">
           <span class="intro-title">Ashwinder&nbsp;Bhupal</span>
-          <!-- Optional subtitle under name:
-          <div style="font-family:'Playfair Display',serif; font-size:.95rem; color:#fff; opacity:.85; margin-top:2px;">
-            Portfolio
-          </div> -->
         </div>
+
+        <div class="intro-subtitle">
+          Software&nbsp;Developer<span class="dot">·</span>Rutgers&nbsp;CS<span class="dot">·</span>Princeton&nbsp;Scholar
+        </div>
+
+        <div class="intro-rule"></div>
+
+        <div class="intro-progress"><span class="intro-progress-bar"></span></div>
       </div>
     </div>
 

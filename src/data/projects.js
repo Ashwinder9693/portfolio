@@ -39,6 +39,45 @@ export const projects = [
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
   },
   {
+    id: 15,
+    title: "Face Recognition Tool",
+    description:
+      "Modern face recognition pipeline built on InsightFace — RetinaFace for detection and ArcFace (512-d embeddings) on ONNX Runtime, matched via cosine similarity. Supports photo/webcam enrollment, live and single-image recognition, and a DB manager. Auto-detects the best ONNX provider (CUDA → DirectML → CPU), hitting ~70 FPS on an RTX 4060.",
+    tags: ["Python", "InsightFace", "ArcFace", "ONNX Runtime", "OpenCV", "Computer Vision"],
+    category: "AI/ML Research",
+    featured: true,
+    year: "2025",
+    github: `${GITHUB}/face_recoginization`,
+    demo: null,
+    image: "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&q=80"
+  },
+  {
+    id: 14,
+    title: "Handwritten Digit Recognition from Scratch",
+    description:
+      "Softmax regression implemented entirely in NumPy — numerically stable softmax, fully vectorized analytic backprop verified by a finite-difference gradient check (rel. error < 1e-6), L2 regularization, and momentum SGD. PyTorch softmax and a small CNN serve as benchmarks (92.3% NumPy vs 99.3% CNN on MNIST), plus two OpenCV demos for air-drawing and live webcam digit classification.",
+    tags: ["Python", "NumPy", "PyTorch", "OpenCV", "MNIST", "Deep Learning", "pytest"],
+    category: "AI/ML Research",
+    featured: true,
+    year: "2025",
+    github: `${GITHUB}/digit_reco`,
+    demo: null,
+    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80"
+  },
+  {
+    id: 13,
+    title: "Gulzar Construction Website",
+    description:
+      "Marketing website for an Australian construction company, built with vanilla HTML, CSS, and JavaScript — no frameworks or build step. Features a filterable 12-project portfolio, scroll-reveal animations via IntersectionObserver, animated stat counters, a Formspree-powered contact form with client-side validation, and full SEO/Open Graph tags. Fully responsive and mobile-first.",
+    tags: ["HTML", "CSS", "JavaScript", "Responsive Design", "SEO"],
+    category: "Web Development",
+    featured: false,
+    year: "2025",
+    github: `${GITHUB}/Gulzar`,
+    demo: null,
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80"
+  },
+  {
     id: 1,
     title: "FindJob4Me",
     description:

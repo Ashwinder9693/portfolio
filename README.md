@@ -1,128 +1,71 @@
-Hello
+# Personal Portfolio
 
-# Portfolio (private repo)
+The source for my personal portfolio — [ashwinderbhupal.com](https://ashwinderbhupal.com).
+Built with React 19 + Vite and deployed to GitHub Pages via GitHub Actions.
 
-This repo contains your **source code**.
-When you push to `main`, a GitHub Action builds the site and publishes the output to your **public repo** [`ashwinder9693/portfolio-pages`](https://github.com/ashwinder9693/portfolio-pages) on the `gh-pages` branch, which is served at **[https://onlyjobs.work](https://onlyjobs.work)**.
+## Tech stack
 
----
+- React 19 + React Router 7
+- Vite 7 (build tooling)
+- Plain CSS (design system via CSS custom properties)
+- GitHub Actions → GitHub Pages (custom domain)
 
-## 🚀 Prerequisites
+## Prerequisites
 
-* [Node.js](https://nodejs.org/) v20+
-* Git configured with your GitHub account
+- [Node.js](https://nodejs.org/) v20+
+- Git
 
----
-
-## 💻 Local development
+## Local development
 
 ```bash
-# install deps
-npm ci
-
-# run dev server (Vite)
-npm run dev
+npm ci        # install dependencies
+npm run dev   # start the Vite dev server (http://localhost:5173)
 ```
 
----
-
-## 📦 Update & deploy
-
-Most common flow:
+## Production build
 
 ```bash
-# make sure you’re up-to-date
-git pull --rebase origin main
+npm run build     # output to dist/
+npm run preview   # serve the built site locally
+```
 
-# stage everything
+## Deployment
+
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site
+and publishes `dist/` to GitHub Pages. The custom domain is configured via
+`public/CNAME` (`ashwinderbhupal.com`); the SPA fallback is handled by copying
+`index.html` to `404.html` during the build.
+
+```bash
 git add -A
-
-# commit with a clear message
-git commit -m "Update: <what you changed>"
-
-# push to the private repo (triggers deploy workflow)
-git push origin main
+git commit -m "Describe your change"
+git push origin main   # builds and deploys automatically
 ```
 
-👉 The workflow in `.github/workflows/deploy.yml` then:
+A Cloudflare Pages workflow (`.github/workflows/cloudflare-pages.yml`) is also
+available as an optional manual deploy (`workflow_dispatch`).
 
-1. Builds the project with Vite
-2. Copies `dist/` → pushes to **`portfolio-pages@gh-pages`**
-3. Publishes the site at **onlyjobs.work**
-
-⏱ Deploys usually take 30–60 seconds.
-
-> First push on a new machine? Use:
->
-> ```bash
-> git push -u origin main
-> ```
-
----
-
-## 🔄 Manual deploy
-
-If you want to redeploy without code changes:
-
-* Go to the **Actions** tab in the private repo
-* Select **Deploy to GitHub Pages (private ➜ public)**
-* Click **Run workflow**
-
----
-
-## 🛠 Optional: test production build locally
-
-```bash
-npm run build
-# output is in dist/
-```
-
----
-
-## ❗ Troubleshooting
-
-### Push rejected: “fetch first”
-
-```bash
-git pull --rebase origin main
-# resolve any conflicts if prompted
-git push origin main
-```
-
-### Nothing happens after push
-
-* Check **Actions** tab (private repo) → see if deploy ran successfully
-* Ensure the workflow file exists at `.github/workflows/deploy.yml`
-* Confirm secret **PAGES\_TOKEN** exists (Settings → Secrets and variables → Actions)
-* Public repo should show new commits on `gh-pages`
-
-### Build or install issues
-
-```bash
-rm -rf node_modules package-lock.json
-npm ci
-```
-
----
-
-## 📂 Repo layout
+## Project structure
 
 ```
 .
-├─ src/              # app code
-├─ public/           # static assets
-├─ dist/             # production build output (generated)
-├─ package.json
-├─ vite.config.*     # Vite config
-└─ .github/
-   └─ workflows/
-      └─ deploy.yml  # deploys private → public
+├─ public/            # static assets (images, resume, CNAME)
+├─ src/
+│  ├─ components/     # reusable UI (Nav, Footer, ScrollReveal, …)
+│  ├─ data/           # site content (projects, skills, experience, personal)
+│  ├─ pages/          # route pages (Home, About, Projects, …)
+│  ├─ styles/         # global CSS + design tokens
+│  └─ lib/            # helpers (asset URLs)
+├─ index.html
+├─ vite.config.js
+└─ .github/workflows/ # CI/CD
 ```
 
----
+## Editing content
 
-That’s all you need: develop in this repo, **`git push origin main`**, and your changes go live at **[https://onlyjobs.work](https://onlyjobs.work)** 🎉
+Site content lives in `src/data/`, separate from presentation:
 
----
-
-Do you also want me to include a **minimal Vite config snippet** (`base: '/'` and React Router SPA fallback) in this README so it’s self-documented?
+- `projects.js` — project cards
+- `skills.js` — skill categories, certifications, learning
+- `experience.js` — work history, leadership, metrics
+- `personal.js` — name, bio, stats, navigation, contact details

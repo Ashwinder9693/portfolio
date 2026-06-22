@@ -15,15 +15,47 @@ import { resumeUrl } from '../lib/assets.js'
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
+  const [error, setError] = useState(false)
   const { contact } = personal
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSending(true)
-    setTimeout(() => {
-      setSending(false)
+    const form = e.currentTarget
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
+    }
+
+    const data = new FormData(form)
+
+    // No backend configured: open the visitor's email client, pre-filled.
+    if (!contact.formEndpoint) {
+      const subject = encodeURIComponent(data.get('subject') || 'Portfolio inquiry')
+      const body = encodeURIComponent(
+        `${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`
+      )
+      window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`
       setSubmitted(true)
-    }, 1500)
+      return
+    }
+
+    // Backend configured (e.g. Formspree): submit asynchronously.
+    setSending(true)
+    setError(false)
+    try {
+      const res = await fetch(contact.formEndpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data
+      })
+      if (!res.ok) throw new Error('Submission failed')
+      form.reset()
+      setSubmitted(true)
+    } catch {
+      setError(true)
+    } finally {
+      setSending(false)
+    }
   }
 
   const infoCards = [
@@ -167,6 +199,12 @@ const Contact = () => {
                     />
                     <label htmlFor="contact-message" className="form-float-label">Message</label>
                   </div>
+
+                  {error && (
+                    <p className="form-error" role="alert">
+                      {contact.formError}
+                    </p>
+                  )}
 
                   <button
                     type="submit"

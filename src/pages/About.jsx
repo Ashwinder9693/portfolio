@@ -33,7 +33,7 @@ const About = () => {
             <div className="about-photo-wrap">
               <div className="about-photo-frame">
                 <img
-                  src={assetUrl('Static/1.jpg')}
+                  src={assetUrl('Static/1.jpeg')}
                   alt={`Portrait of ${personal.name}`}
                   className="about-photo"
                   loading="lazy"

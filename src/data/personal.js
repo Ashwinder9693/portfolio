@@ -24,8 +24,8 @@ export const personal = {
   resume: "/Resume/Ashwinder_Bhupal.pdf",
   location: "New Jersey, USA",
   stats: [
-    { value: "3.7", label: "GPA" },
-    { value: "9+", label: "Projects" },
+    { value: "3.94", label: "GPA" },
+    { value: "13+", label: "Projects" },
     { value: "16+", label: "Certifications" },
     { value: "3", label: "Hackathons" }
   ],
@@ -106,6 +106,12 @@ export const personal = {
       "I'm currently open to internship opportunities, research collaborations, and interesting projects. Let's connect.",
     formSuccess:
       "Thanks for reaching out! I'll get back to you soon.",
+    formError:
+      "Something went wrong sending your message. Please email me directly instead.",
+    // Paste a Formspree form ID (e.g. "https://formspree.io/f/abcdwxyz") to send
+    // messages straight to your inbox. Left blank, the form opens the visitor's
+    // email client pre-filled instead — no backend required.
+    formEndpoint: "",
     linkedinHandle: "ashwinderbhupal",
     githubHandle: "ashwinderbhupal"
   }

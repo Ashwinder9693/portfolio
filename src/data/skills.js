@@ -185,7 +185,7 @@ export const currentlyLearning = [
 
 export const skillsPageCopy = {
   title: "Skills & Expertise",
-  subtitle: "Technical skills aligned with my LinkedIn profile across development, data, and AI",
+  subtitle: "A working toolkit across full-stack development, data, and AI",
   learningLabel: "Always Growing",
   certificationsLabel: "Certifications"
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ScrollReveal from '../components/ScrollReveal.jsx'
 import CountUp from '../components/CountUp.jsx'
-import { IconCheck, IconChevron } from '../components/icons.jsx'
+import { IconChevron } from '../components/icons.jsx'
 import {
   experiences,
   leadership,
@@ -18,7 +18,9 @@ const parseStat = (valueStr) => {
 }
 
 const Experience = () => {
-  const [expandedIds, setExpandedIds] = useState(() => new Set([experiences[0]?.id]))
+  const [expandedIds, setExpandedIds] = useState(
+    () => new Set([experiences.find((e) => !e.roles)?.id])
+  )
 
   const toggleExpanded = (id) => {
     setExpandedIds((prev) => {
@@ -64,6 +66,54 @@ const Experience = () => {
           </ScrollReveal>
 
           {experiences.map((exp) => {
+            if (exp.roles) {
+              return (
+                <ScrollReveal key={exp.id}>
+                  <article className="experience-card experience-group">
+                    <div className="experience-group-header">
+                      <h3 className="experience-company-name">{exp.company}</h3>
+                      <p className="experience-period">
+                        {exp.period} · {exp.duration}
+                        {exp.location ? ` · ${exp.location}` : ''}
+                      </p>
+                    </div>
+
+                    <div className="experience-roles">
+                      {exp.roles.map((role) => (
+                        <div key={role.role} className="experience-role-item">
+                          <span className="experience-role-dot" aria-hidden="true" />
+                          <div className="experience-role-body">
+                            <div className="experience-role-top">
+                              <h4 className="experience-role-title">{role.role}</h4>
+                              <span className="tag">{role.type}</span>
+                            </div>
+                            <p className="experience-period">
+                              {role.period}
+                              {role.location ? ` · ${role.location}` : ''}
+                            </p>
+                            <ul className="experience-achievements experience-achievements-static">
+                              {role.achievements.map((item) => (
+                                <li key={item}>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="experience-tags">
+                              {role.tags.map((tag) => (
+                                <span key={tag} className="tag">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                </ScrollReveal>
+              )
+            }
+
             const expanded = expandedIds.has(exp.id)
             return (
               <ScrollReveal key={exp.id}>
@@ -84,7 +134,6 @@ const Experience = () => {
                     <ul className="experience-achievements">
                       {exp.achievements.map((item) => (
                         <li key={item}>
-                          <IconCheck />
                           <span>{item}</span>
                         </li>
                       ))}
